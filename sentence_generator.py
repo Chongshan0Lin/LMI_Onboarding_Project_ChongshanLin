@@ -1,8 +1,12 @@
 import os
-from openai import OpenAI, completions
-import json
 from dotenv import load_dotenv
+from openai import OpenAI, completions
+
 from vector_database_setter import query_documents
+
+load_dotenv()
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 
 def create_prompt(retrieved_texts, user_query):
     context = "\n\n---\n\n".join(retrieved_texts)
@@ -18,6 +22,7 @@ def create_prompt(retrieved_texts, user_query):
     Answer:
     """
     return prompt
+
 
 def generate_answer(prompt):
     response = completions.create(
@@ -39,7 +44,7 @@ def rag_pipeline(query, k=3):
     print("Prompt:\n", prompt)  # Printing the entire prompt
     answer = generate_answer(prompt)
     return answer
-
+print("Enter your query:")
 user_query = input("Enter your query: ")
 final_output = rag_pipeline(user_query, k=3)
 print("Final Output:\n", final_output)

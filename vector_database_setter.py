@@ -1,9 +1,10 @@
 import os
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
-from openai import OpenAI
+from dotenv import load_dotenv
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
 
-# How to perform business
+load_dotenv()
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 def load_texts(directory):
     texts = []
@@ -22,8 +23,8 @@ persist_directory = "chromadb"
 
 # Load documents
 documents = load_texts('./archive/business')
+# OpenAIEmbeddings.openai_api_key = os.getenv('OPENAI_API_KEY')
 
-# Initialize embedding function
 embeddings = OpenAIEmbeddings()
 
 # Create Chroma vector store
